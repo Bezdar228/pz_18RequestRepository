@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace pz_18Request
 {
-    public  class BindableBase : INotifyPropertyChanged
+    public class BindableBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void SetProperty<T>(ref T member, T value, 
-            [CallerMemberName]string property ="")
+        protected virtual void SetProperty<T>(ref T member, T value,
+            [CallerMemberName] string property = "")
         {
-            if(object.Equals(member, value)) return;
+            if (object.Equals(member, value)) return;
             member = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }

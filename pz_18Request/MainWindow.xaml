@@ -12,15 +12,21 @@
         <DataTemplate DataType="{x:Type viewModel:RequestListViewModel}">
             <views:RequestListView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:AddEditRequestViewModel}">
+            <views:AddEditRequestViewModel/>
+        </DataTemplate>
     </Window.Resources>
+
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
+
 
         <Grid x:Name="NavigationBar">
             <Grid.ColumnDefinitions>
@@ -28,15 +34,16 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Заявки"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="requestList"/>
+            <Button Content="Заказы"
+            Command="{Binding NavigationCommand}"
+            CommandParameter="requestList"/>
 
             <Button Content="оформить заказ"
-                Command="{Binding NavigationCommand}"
-                CommandParameter="orderPrep"
-                Grid.Column="1"/>
+            Command="{Binding NavigationCommand}"
+            CommandParameter="orderPrep"
+            Grid.Column="1"/>
         </Grid>
+
         <Grid x:Name="ContentGrid" Grid.Row="1">
             <ContentControl Content="{Binding CurrentViewModel}"/>
         </Grid>

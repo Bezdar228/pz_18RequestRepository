@@ -9,17 +9,20 @@ using System.Threading.Tasks;
 
 namespace pz_18Request.Services
 {
-    internal class RequestRepository : IRequestRepository
+    public class RequestRepository : IRequestRepository
     {
         readonly RegApplicationContext _context = new RegApplicationContext();
-        public Task<Request> AddRequestAsync(Request request)
+
+        public async Task<Request> AddRequestAsync(Request request)
         {
-            throw new NotImplementedException();
+            _context.Requests.Add(request);
+            await _context.SaveChangesAsync();
+            return request;
         }
 
-        public Task DeleteRequestAsync(int requestId)
+        public async Task<List<DeviceModel>> GetDeviceModelsAsync()
         {
-            throw new NotImplementedException();
+            return await _context.DeviceModels.ToListAsync();
         }
 
         public Task<List<Request>> GetRequestAsync()
@@ -27,14 +30,21 @@ namespace pz_18Request.Services
             return _context.Requests.ToListAsync();
         }
 
-        public Task<Request> GetRequestByIdAsync(int requestId)
+        public Task<Request> GetRequstByIdAsync(int requestId)
         {
             return _context.Requests.FirstOrDefaultAsync(x => x.RequestId == requestId);
         }
 
-        public Task<Request> UpdateRequestAsync(Request request)
+        public async Task<Request> UpdateRequestAsync(Request request)
         {
-            throw new NotImplementedException();
+            if (!_context.Requests.Local.Any(x => x.RequestId == request.RequestId))
+            {
+                _context.Requests.Attach(request);
+            }
+            _context.Entry(request).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return request;
         }
+
     }
 }

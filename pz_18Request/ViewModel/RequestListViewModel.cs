@@ -9,7 +9,7 @@ using pz_18Request.Models;
 
 namespace pz_18Request.ViewModel
 {
-    internal class RequestListViewModel : BindableBase
+    class RequestListViewModel : BindableBase
     {
         private IRequestRepository _repository;
 
@@ -17,16 +17,18 @@ namespace pz_18Request.ViewModel
         {
             _repository = repository;
             Requests = new ObservableCollection<Request>();
+            AddRequestCommand = new RelayCommand(OnAddRequest);
+            EditRequestCommand = new RelayCommand<Request>(OnEditRequest);
             LoadRequest();
         }
 
-        private ObservableCollection<Request>? _requests;
-
+        private ObservableCollection<Request>? _request;
         public ObservableCollection<Request>? Requests
         {
-            get => _requests;
-            set => SetProperty(ref _requests, value);
+            get => _request;
+            set => SetProperty(ref _request, value);
         }
+
         private List<Request>? _requestList;
 
         public async void LoadRequest()
@@ -34,5 +36,24 @@ namespace pz_18Request.ViewModel
             _requestList = await _repository.GetRequestAsync();
             Requests = new ObservableCollection<Request>(_requestList);
         }
+
+        public RelayCommand AddRequestCommand { get; private set; }
+
+        public RelayCommand<Request> EditRequestCommand { get; private set; }
+
+        public event Action AddRequestRequested = delegate { };
+        public event Action<Request> EditRequestRequested = delegate { };
+
+        private void OnAddRequest()
+        {
+            AddRequestRequested?.Invoke();
+        }
+        private void OnEditRequest(Request request)
+        {
+            EditRequestRequested(request);
+        }
+
+
+
     }
 }

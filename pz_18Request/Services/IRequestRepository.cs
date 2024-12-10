@@ -7,16 +7,19 @@ using System.Threading.Tasks;
 
 namespace pz_18Request.Services
 {
-    internal interface IRequestRepository
+    public interface IRequestRepository
     {
+        // вывод всех заявок
         Task<List<Request>> GetRequestAsync();
+        
 
-        Task<Request> GetRequestByIdAsync(int requestId);
+        // вывод заявок по Id
+        Task<Request> GetRequstByIdAsync(int requestId);
 
+        //обновить заявку
         Task<Request> UpdateRequestAsync(Request request);
 
-        Task DeleteRequestAsync(int requestId);
-
+        //добавить заявку
         Task<Request> AddRequestAsync(Request request);
     }
 }
