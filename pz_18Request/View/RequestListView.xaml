@@ -33,13 +33,7 @@
             <StackPanel Orientation="Horizontal"
                         Grid.Column="1"
                         HorizontalAlignment="Right">
-                <TextBlock Text="поиск:"
-                           Margin="5"/>
-                <TextBox Text="{Binding SearchInput,
-                                UpdateSourceTrigger=PropertyChanged}"
-                         Width="200"/>
-                <Button Content="X"
-                        Command="{Binding ClearSearchInput}"/>
+                
             </StackPanel>
         </Grid>
 

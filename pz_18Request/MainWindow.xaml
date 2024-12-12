@@ -38,10 +38,7 @@
             Command="{Binding NavigationCommand}"
             CommandParameter="requestList"/>
 
-            <Button Content="оформить заказ"
-            Command="{Binding NavigationCommand}"
-            CommandParameter="orderPrep"
-            Grid.Column="1"/>
+        
         </Grid>
 
         <Grid x:Name="ContentGrid" Grid.Row="1">
