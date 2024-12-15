@@ -70,6 +70,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="редактировать"
+                                    Background="#404069"
+                                    Foreground="White"
                                     Command="{Binding DataContext.AddRequestCommand,
                                         RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
                                     CommandParameter="{Binding}"

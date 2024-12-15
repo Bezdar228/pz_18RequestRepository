@@ -24,5 +24,8 @@ namespace pz_18Request.ViewModel
         private string _problemDescription;
         public string ProblemDescription { get => _problemDescription; set => SetProperty(ref _problemDescription, value); }
 
+        [Required] // Указываем, что это поле обязательно
+        private int _clientId;
+        public int ClientId { get => _clientId; set => SetProperty(ref _clientId, value); }
     }
 }

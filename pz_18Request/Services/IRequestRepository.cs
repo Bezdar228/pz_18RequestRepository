@@ -1,25 +1,14 @@
-﻿using System;
-using pz_18Request.Models;
+﻿using pz_18Request.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace pz_18Request.Services
+public interface IRequestRepository
 {
-    public interface IRequestRepository
-    {
-        // вывод всех заявок
-        Task<List<Request>> GetRequestAsync();
-        
-
-        // вывод заявок по Id
-        Task<Request> GetRequstByIdAsync(int requestId);
-
-        //обновить заявку
-        Task<Request> UpdateRequestAsync(Request request);
-
-        //добавить заявку
-        Task<Request> AddRequestAsync(Request request);
-    }
+    Task<List<Client>> GetClientsAsync(); // Получить список клиентов
+    Task<List<RequestStatus>> GetRequestStatusesAsync(); // Получить список статусов заявки
+    Task<List<DeviceModel>> GetDeviceModelsAsync(); // Получить список моделей устройств
+    Task<Request> AddRequestAsync(Request request);
+    Task<Request> UpdateRequestAsync(Request request);
+    Task<List<Request>> RefreshRequestsAsync();
+    Task<Request> GetRequstByIdAsync(int requestId);
 }

@@ -1,72 +1,52 @@
-﻿using pz_18Request.Models;
-using pz_18Request.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using pz_18Request.Models;
+using pz_18Request.Services;
 
 namespace pz_18Request.ViewModel
 {
-    class CommentListViewModel : BindableBase
+    public class CommentListViewModel : BindableBase
     {
-        private ICommentRepository _repository;
+        private readonly ICommentRepository _repository;
 
         public CommentListViewModel(ICommentRepository repository)
         {
             _repository = repository;
             Comments = new ObservableCollection<Comment>();
-            LoadComment();
         }
 
-        private bool _isEditMode;
+        public ObservableCollection<Comment> Comments { get; private set; }
 
-        public bool isEditMode
-        {
-            get => _isEditMode;
-            set => SetProperty(ref _isEditMode, value);
-        }
-
-        private ObservableCollection<Comment>? _comments;
-        public ObservableCollection<Comment>? Comments
-        {
-            get => _comments;
-            set => SetProperty(ref _comments, value);
-        }
-
-        public ObservableCollection<Request> _request;
-        public ObservableCollection<Request>? Requests
-        {
-            get => _request;
-            set => SetProperty(ref _request, value);
-        }
-
-        public ICommand LoadCommentCommand { get; }
-
-        private List<Comment>? _commentList;
-        private List<Request>? _requestList;
-        public RelayCommand<Request> OpenOrderViewCommand { get; private set; }
-
-        public event Action<Request> OpenOrderViewRequested = delegate { };
         public async void LoadComment()
-        {
-            Comments = new ObservableCollection<Comment>(await _repository.GetCommentAsync());
-        }
-
-        public async void LoadCommentRequest(int commentId)
         {
             try
             {
-                _requestList = await _repository.GetCommentByRequestAsync(commentId);
-                Requests = new ObservableCollection<Request>(_requestList.OrderBy(o => o.ProblemDescription));
+                var commentList = await _repository.GetCommentAsync(); 
+                Comments.Clear(); 
 
+                foreach (var comment in commentList)
+                {
+                    Comments.Add(comment); 
+                }
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine($"Ошибка при загрузке комментариев: {ex.Message}");
             }
         }
+
+        public async void LoadCommentRequest(int requestId)
+        {
+            try
+            {
+                var commentList = await _repository.GetCommentByRequestAsync(requestId);
+                Comments = new ObservableCollection<Comment>(commentList.OrderBy(c => c.CommentDate));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка при загрузке комментариев: {ex.Message}");
+            }
+        }
+
     }
 }

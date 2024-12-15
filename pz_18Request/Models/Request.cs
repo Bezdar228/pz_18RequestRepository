@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace pz_18Request.Models;
 
@@ -11,7 +12,9 @@ public partial class Request
 
     public int DeviceModelId { get; set; }
 
-    public string ProblemDescription { get; set; } = null!;
+    [Required(ErrorMessage = "Поле обязательно для заполнения")]
+    public string ProblemDescription { get; set; }
+
 
     public int StatusId { get; set; }
 
@@ -28,4 +31,5 @@ public partial class Request
     public virtual RequestStatus Status { get; set; } = null!;
 
     public virtual Technician? Technician { get; set; }
+    
 }

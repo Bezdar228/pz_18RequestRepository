@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Windows.Themes;
 using pz_18Request.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace pz_18Request.Services
@@ -12,6 +10,8 @@ namespace pz_18Request.Services
     public class RequestRepository : IRequestRepository
     {
         readonly RegApplicationContext _context = new RegApplicationContext();
+
+        public event Action RequestsUpdated;
 
         public async Task<Request> AddRequestAsync(Request request)
         {
@@ -25,9 +25,16 @@ namespace pz_18Request.Services
             return await _context.DeviceModels.ToListAsync();
         }
 
-        public Task<List<Request>> GetRequestAsync()
+        public async Task<List<Request>> GetRequestAsync()
         {
-            return _context.Requests.ToListAsync();
+            // Возвращаем список всех заявок
+            return await _context.Requests.ToListAsync();
+        }
+
+        public async Task<List<Request>> RefreshRequestsAsync()
+        {
+            // Перезагружаем заявки из базы данных
+            return await _context.Requests.ToListAsync();
         }
 
         public Task<Request> GetRequstByIdAsync(int requestId)
@@ -46,5 +53,16 @@ namespace pz_18Request.Services
             return request;
         }
 
+        // Реализация метода получения списка клиентов
+        public async Task<List<Client>> GetClientsAsync()
+        {
+            return await _context.Clients.ToListAsync();
+        }
+
+        // Реализация метода получения списка статусов заявки
+        public async Task<List<RequestStatus>> GetRequestStatusesAsync()
+        {
+            return await _context.RequestStatuses.ToListAsync();
+        }
     }
 }
