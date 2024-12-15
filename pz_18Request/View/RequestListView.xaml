@@ -26,6 +26,8 @@
             </Grid.ColumnDefinitions>
             <Button Content="добавить заказ"
                     Command="{Binding AddRequestCommand}"
+                    Background="#404069"
+                    Foreground="White"
                     Grid.Column="0"
                     HorizontalAlignment="Left"
                     HorizontalContentAlignment="Center"
@@ -38,17 +40,32 @@
         </Grid>
 
         <DataGrid Name="dGrid" 
-                  ItemsSource="{Binding Requests}"
-                  AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  Grid.Row="1">
+          ItemsSource="{Binding Requests}"
+          AutoGenerateColumns="False"
+          CanUserAddRows="False"
+          Grid.Row="1"
+          Foreground="#404069"
+          Background="White"
+          FontFamily="Noto Sans"
+          FontSize="14"
+          GridLinesVisibility="Horizontal"
+          RowBackground="White"
+          AlternatingRowBackground="#F5F5F5"
+          HorizontalGridLinesBrush="#D3D3D3"
+          VerticalGridLinesBrush="#D3D3D3"
+          BorderBrush="#404069"
+          BorderThickness="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding DateAdded}"
-                     Width="*"/>
-                <DataGridTextColumn Binding="{Binding ProblemDescription }"
-          Width="*"/>
+                <DataGridTextColumn Header="Дата добавления"
+                            Binding="{Binding DateAdded}"
+                            Width="*"
+                            Foreground="#404069" />
+                <DataGridTextColumn Header="Описание проблемы"
+                            Binding="{Binding ProblemDescription}"
+                            Width="*"
+                            Foreground="#404069" />
 
-       
+
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

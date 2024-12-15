@@ -15,6 +15,10 @@
         <DataTemplate DataType="{x:Type viewModel:AddEditRequestViewModel}">
             <views:AddEditRequestViewModel/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:CommentListViewModel}">
+            <views:CommentListView/>
+        </DataTemplate>
+
     </Window.Resources>
 
     <Window.DataContext>
@@ -35,10 +39,33 @@
             </Grid.ColumnDefinitions>
 
             <Button Content="Заказы"
-            Command="{Binding NavigationCommand}"
-            CommandParameter="requestList"/>
+        Command="{Binding NavigationCommand}"
+        CommandParameter="requestList"
+        Background="#404069"
+        Foreground="White"
+        FontFamily="Noto Sans"
+        FontSize="16"
+        Padding="5"
+        BorderThickness="0"
+        Height="260"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center" Width="400" />
 
-        
+            <Button Content="Комментарии"
+        Command="{Binding NavigationCommand}"
+        CommandParameter="commentList"
+        Background="#404069"
+        Foreground="White"
+        FontFamily="Noto Sans"
+        FontSize="16"
+        Padding="5"
+        BorderThickness="0"
+        Height="144"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Grid.Column="1" Width="400" />
+
+
         </Grid>
 
         <Grid x:Name="ContentGrid" Grid.Row="1">

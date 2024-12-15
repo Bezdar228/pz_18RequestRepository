@@ -20,6 +20,7 @@ namespace pz_18Request.ViewModel
             AddRequestCommand = new RelayCommand(OnAddRequest);
             EditRequestCommand = new RelayCommand<Request>(OnEditRequest);
             LoadRequest();
+            CheckCommentsCommand = new RelayCommand<Request>(OnCheckComment);
         }
 
         private ObservableCollection<Request>? _request;
@@ -43,7 +44,9 @@ namespace pz_18Request.ViewModel
 
         public event Action AddRequestRequested = delegate { };
         public event Action<Request> EditRequestRequested = delegate { };
+        public RelayCommand<Request> CheckCommentsCommand { get; private set; }
 
+        public event Action<Request> CheckCommentsRequested = delegate { };
         private void OnAddRequest()
         {
             AddRequestRequested?.Invoke();
@@ -53,7 +56,11 @@ namespace pz_18Request.ViewModel
             EditRequestRequested(request);
         }
 
+        private void OnCheckComment(Request request)
+        {
+            CheckCommentsRequested(request);
 
+        }
 
     }
 }

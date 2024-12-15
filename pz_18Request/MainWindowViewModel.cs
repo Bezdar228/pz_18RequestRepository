@@ -2,10 +2,6 @@
 using pz_18Request.Services;
 using pz_18Request.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Unity;
 
 namespace pz_18Request
@@ -14,6 +10,7 @@ namespace pz_18Request
     {
         private RequestListViewModel _requestListVM;
         private AddEditRequestViewModel _addEditRequestVM;
+        private CommentListViewModel _commentListVM;
 
         private IRequestRepository _requestRepository = new RequestRepository();
         public MainWindowViewModel()
@@ -24,6 +21,9 @@ namespace pz_18Request
             _requestListVM.AddRequestRequested += NavigationAddRequest;
             _requestListVM.EditRequestRequested += NavigationUpdateRequest;
             _addEditRequestVM.Done += OnCancelDone;
+            _requestListVM.CheckCommentsRequested += NavigationToCommentRequest;
+            _commentListVM = new CommentListViewModel(new CommentRepository());
+            _commentListVM = RepoContainer.Container.Resolve<CommentListViewModel>();
         }
 
         public BindableBase _currentViewModel;
@@ -40,24 +40,34 @@ namespace pz_18Request
             {
                 case "requestList":
                     CurrentViewModel = _requestListVM; break;
+                case "commentList":
+                    CurrentViewModel = _commentListVM; break;
             }
         }
 
         private void NavigationUpdateRequest(Request request)
         {
-            _addEditRequestVM.isEditMode = true;    
-            _addEditRequestVM.SetCustomer(request);
-            CurrentViewModel = _addEditRequestVM;
-        }
-        private void NavigationAddRequest()
-        {
-            _addEditRequestVM.isEditMode = false;
-            CurrentViewModel = _addEditRequestVM;
-        }
-        private void OnCancelDone()
-        {
-            CurrentViewModel = _requestListVM;
+            _addEditRequestVM.isEditMode = true;
+            _addEditRequestVM.SetCustomer(request); // Устанавливаем редактируемую заявку
+            CurrentViewModel = _addEditRequestVM;  // Переключаемся на AddEditRequestViewModel
         }
 
+        private void NavigationAddRequest()
+        {
+            _addEditRequestVM.SetNewRequest(); // Инициализация новой заявки
+            _addEditRequestVM.isEditMode = false; // Переключение в режим добавления
+            CurrentViewModel = _addEditRequestVM; // Переход на AddEditRequestViewModel
+        }
+
+        private void OnCancelDone()
+        {
+            CurrentViewModel = _requestListVM; // Возврат к списку заявок
+        }
+
+        private void NavigationToCommentRequest(Request request)
+        {
+            _commentListVM.LoadCommentRequest(request.RequestId);
+            CurrentViewModel = _commentListVM;
+        }
     }
 }

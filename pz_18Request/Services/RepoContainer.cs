@@ -16,6 +16,8 @@ namespace pz_18Request.Services
             _container = new UnityContainer();
             _container.RegisterType<IRequestRepository, RequestRepository>(
                 new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommentRepository, CommentRepository>(
+                new ContainerControlledLifetimeManager());
         }
 
         public static IUnityContainer Container
